@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sawyer Jungle — SM Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 24px 32px;
+    border-bottom: 2px solid #e94560;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header h1 {
+    font-size: 28px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header h1 span { color: #e94560; }
+  .header .date {
+    color: #888;
+    font-size: 14px;
+  }
+  .header .managed-by {
+    color: #aaa;
+    font-size: 13px;
+    text-align: right;
+  }
+  .header .managed-by strong { color: #e94560; }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: #e94560; }
+  .stat-card .platform {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .stat-card .value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .stat-card .label {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .stat-card .sub-stat {
+    font-size: 12px;
+    color: #555;
+    margin-top: 8px;
+    border-top: 1px solid #222;
+    padding-top: 8px;
+  }
+
+  /* Platform colors */
+  .stat-card.twitter .value { color: #1da1f2; }
+  .stat-card.youtube .value { color: #ff0000; }
+  .stat-card.twitch .value { color: #9146ff; }
+  .stat-card.discord .value { color: #5865f2; }
+  .stat-card.metafy .value { color: #00d4aa; }
+  .stat-card.tiktok .value { color: #fe2c55; }
+
+  /* View Rate Bar */
+  .view-rate-section {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .view-rate-section h3 {
+    color: #fff;
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+  .rate-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .rate-bar-label {
+    width: 120px;
+    font-size: 13px;
+    color: #aaa;
+  }
+  .rate-bar-bg {
+    flex: 1;
+    height: 24px;
+    background: #1a1a2e;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .rate-bar-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.5s ease;
+  }
+  .rate-bar-pct {
+    width: 60px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .rate-bar-fill.red { background: linear-gradient(90deg, #e94560, #ff6b6b); }
+  .rate-bar-fill.yellow { background: linear-gradient(90deg, #f0a500, #ffd700); }
+  .rate-bar-fill.green { background: linear-gradient(90deg, #00d4aa, #00ff88); }
+  .rate-target {
+    font-size: 12px;
+    color: #555;
+    text-align: right;
+  }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .section-header h2 {
+    font-size: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-header .badge {
+    background: #e94560;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-weight: 600;
+  }
+
+  /* Comment feed */
+  .comment-feed {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 900px) {
+    .comment-feed { grid-template-columns: 1fr; }
+  }
+
+  .feed-panel {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .feed-panel .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #2a2a3a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .feed-panel .panel-header h3 {
+    font-size: 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feed-panel .panel-header .count {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .comment-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid #1a1a2e;
+    transition: background 0.15s;
+  }
+  .comment-item:hover { background: #1a1a2e; }
+  .comment-item:last-child { border-bottom: none; }
+  .comment-item .comment-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .comment-item .comment-author {
+    font-weight: 600;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .comment-item .comment-date {
+    font-size: 11px;
+    color: #555;
+  }
+  .comment-item .comment-text {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .comment-item .comment-source {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  .comment-item .reply-link {
+    display: inline-block;
+    font-size: 12px;
+    color: #e94560;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+  .comment-item .reply-link:hover { color: #ff6b6b; }
+
+  .status-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .status-tag.needs-reply { background: #e9456033; color: #e94560; }
+  .status-tag.replied { background: #00d4aa33; color: #00d4aa; }
+  .status-tag.noted { background: #f0a50033; color: #f0a500; }
+
+  .empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #444;
+    font-size: 14px;
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 8px; }
+
+  /* Goals */
+  .goals-section {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .goal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .goal-row:last-child { border-bottom: none; }
+  .goal-name { font-size: 14px; color: #ccc; }
+  .goal-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .goal-bar {
+    width: 120px;
+    height: 8px;
+    background: #1a1a2e;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .goal-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e94560, #ff6b6b);
+  }
+  .goal-numbers {
+    font-size: 13px;
+    color: #888;
+    min-width: 100px;
+    text-align: right;
+  }
+
+  /* Notes & Ideas */
+  .notes-section {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 900px) {
+    .notes-grid { grid-template-columns: 1fr; }
+  }
+  .note-box {
+    background: #0a0a0f;
+    border: 1px solid #2a2a3a;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .note-box h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .note-box h4.sawyer { color: #9146ff; }
+  .note-box h4.greg { color: #e94560; }
+  .note-box textarea {
+    width: 100%;
+    min-height: 120px;
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 6px;
+    color: #ccc;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .note-box textarea:focus {
+    outline: none;
+    border-color: #e94560;
+  }
+  .note-box .save-indicator {
+    font-size: 11px;
+    color: #444;
+    margin-top: 6px;
+    text-align: right;
+    min-height: 16px;
+  }
+  .note-box .save-indicator.saved { color: #00d4aa; }
+
+  /* Idea cards */
+  .idea-input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .idea-input-row input {
+    flex: 1;
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 6px;
+    color: #ccc;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  .idea-input-row input:focus {
+    outline: none;
+    border-color: #e94560;
+  }
+  .idea-input-row button {
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .idea-input-row button:hover { background: #ff6b6b; }
+  .idea-list {
+    list-style: none;
+    margin-top: 10px;
+  }
+  .idea-list li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #1a1a2e;
+    font-size: 13px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .idea-list li:last-child { border-bottom: none; }
+  .idea-list li .idea-text { flex: 1; }
+  .idea-list li .idea-author {
+    font-size: 11px;
+    color: #555;
+    margin-left: 12px;
+    white-space: nowrap;
+  }
+  .idea-list li .idea-delete {
+    color: #e94560;
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 16px;
+    opacity: 0.5;
+  }
+  .idea-list li .idea-delete:hover { opacity: 1; }
+
+  /* Goals & Expectations */
+  .expectations-section {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .expect-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 900px) {
+    .expect-grid { grid-template-columns: 1fr; }
+  }
+  .expect-card {
+    background: #0a0a0f;
+    border: 1px solid #2a2a3a;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .expect-card h4 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .expect-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 13px;
+    color: #aaa;
+  }
+  .expect-item input[type="checkbox"] {
+    accent-color: #e94560;
+    width: 16px;
+    height: 16px;
+  }
+  .expect-item.checked { color: #555; text-decoration: line-through; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: #333;
+    font-size: 12px;
+    border-top: 1px solid #1a1a2e;
+  }
+  .footer a { color: #e94560; text-decoration: none; }
+
+  /* Last updated pulse */
+  .pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00d4aa;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🎮 <span>SAWYER JUNGLE</span> — SM Dashboard</h1>
+    <div class="date"><span class="pulse"></span>Last updated: February 15, 2026 — Day 0 Baseline</div>
+  </div>
+  <div class="managed-by">
+    Managed by <strong>Greg</strong> & <strong>The Crow</strong> 🪶
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Platform Stats -->
+  <div class="stats-grid">
+    <div class="stat-card twitter">
+      <div class="platform">Twitter / X</div>
+      <div class="value">2,310</div>
+      <div class="label">Followers</div>
+      <div class="sub-stat">Viral: 200K-808K views<br>Regular: 200-500 views</div>
+    </div>
+    <div class="stat-card youtube">
+      <div class="platform">YouTube (Main)</div>
+      <div class="value">48.5K</div>
+      <div class="label">Subscribers</div>
+      <div class="sub-stat">1,900 videos • ~1.9K avg views<br>Highest: ~14K views</div>
+    </div>
+    <div class="stat-card twitch">
+      <div class="platform">Twitch</div>
+      <div class="value">43</div>
+      <div class="label">Avg Viewers</div>
+      <div class="sub-stat">Peak: 91 • Rank #37,843<br>Top 0.53% • Affiliate</div>
+    </div>
+    <div class="stat-card discord">
+      <div class="platform">Discord</div>
+      <div class="value">~617</div>
+      <div class="label">Members</div>
+      <div class="sub-stat">Snapshot: 140 online / 477 offline<br>Roles: admins, students, bobs</div>
+    </div>
+    <div class="stat-card metafy">
+      <div class="platform">Metafy</div>
+      <div class="value">863</div>
+      <div class="label">Subscribers</div>
+      <div class="sub-stat">100% rebook rate<br>Coaching all ranks</div>
+    </div>
+    <div class="stat-card tiktok">
+      <div class="platform">TikTok</div>
+      <div class="value">???</div>
+      <div class="label">Followers</div>
+      <div class="sub-stat">Underused / inactive<br>BIGGEST OPPORTUNITY</div>
+    </div>
+  </div>
+
+  <!-- View Rate Health -->
+  <div class="view-rate-section">
+    <h3>📊 YouTube View Rate Health</h3>
+    <div class="rate-bar-container">
+      <div class="rate-bar-label">Current (4%)</div>
+      <div class="rate-bar-bg">
+        <div class="rate-bar-fill red" style="width: 13%"></div>
+      </div>
+      <div class="rate-bar-pct" style="color: #e94560;">4%</div>
+    </div>
+    <div class="rate-bar-container">
+      <div class="rate-bar-label">Target (20%)</div>
+      <div class="rate-bar-bg">
+        <div class="rate-bar-fill yellow" style="width: 66%"></div>
+      </div>
+      <div class="rate-bar-pct" style="color: #f0a500;">20%</div>
+    </div>
+    <div class="rate-bar-container">
+      <div class="rate-bar-label">Healthy (30%)</div>
+      <div class="rate-bar-bg">
+        <div class="rate-bar-fill green" style="width: 100%"></div>
+      </div>
+      <div class="rate-bar-pct" style="color: #00d4aa;">30%</div>
+    </div>
+    <div class="rate-target">48,500 subs × 4% = ~1,940 views/video → Goal: 9,700+ views/video (20%)</div>
+  </div>
+
+  <!-- 2-Week Goals -->
+  <div class="goals-section">
+    <div class="section-header">
+      <h2>🎯 2-Week Trial Goals (Feb 15 → Mar 1)</h2>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">Twitter followers → 2,600</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">2,310 / 2,600</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">YouTube avg views → 3,000+</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">1,900 / 3,000</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">Twitch avg viewers → 60</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">43 / 60</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">Discord members → 700</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">~617 / 700</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">Reddit tier list posts (2)</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">0 / 2</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">TikTok account active</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">No / Yes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comment Feeds -->
+  <div class="comment-feed">
+
+    <!-- Reddit Feed -->
+    <div class="feed-panel">
+      <div class="panel-header">
+        <h3>🟠 Reddit Mentions & Comments</h3>
+        <div class="count">0 items</div>
+      </div>
+      <div class="empty-state">
+        <div class="icon">📡</div>
+        No Reddit activity yet.<br>
+        Tier list posts will populate this feed once published.
+      </div>
+      <!--
+      TEMPLATE — copy this block for each comment:
+      <div class="comment-item">
+        <div class="comment-meta">
+          <span class="comment-author">u/username</span>
+          <span class="status-tag needs-reply">Needs Reply</span>
+        </div>
+        <div class="comment-source">r/Jungle_Mains • Pro Tier List Post</div>
+        <div class="comment-text">"Comment text goes here..."</div>
+        <div class="comment-meta">
+          <a href="https://reddit.com/link" class="reply-link" target="_blank">→ Reply on Reddit</a>
+          <span class="comment-date">Feb 16, 2026</span>
+        </div>
+      </div>
+      -->
+    </div>
+
+    <!-- YouTube Feed -->
+    <div class="feed-panel">
+      <div class="panel-header">
+        <h3>🔴 YouTube Comments</h3>
+        <div class="count">0 items</div>
+      </div>
+      <div class="empty-state">
+        <div class="icon">💬</div>
+        No tracked YouTube comments yet.<br>
+        Comments from new videos will appear here with reply links.
+      </div>
+      <!--
+      TEMPLATE — copy this block for each comment:
+      <div class="comment-item">
+        <div class="comment-meta">
+          <span class="comment-author">@username</span>
+          <span class="status-tag needs-reply">Needs Reply</span>
+        </div>
+        <div class="comment-source">Video: "Patch 26.3 Jungle Tier List"</div>
+        <div class="comment-text">"Comment text goes here..."</div>
+        <div class="comment-meta">
+          <a href="https://youtube.com/link" class="reply-link" target="_blank">→ Reply on YouTube</a>
+          <span class="comment-date">Feb 16, 2026</span>
+        </div>
+      </div>
+      -->
+    </div>
+
+  </div>
+
+  <!-- Twitter Feed (bonus) -->
+  <div class="feed-panel" style="margin-bottom: 32px;">
+    <div class="panel-header">
+      <h3>🔵 Twitter/X Mentions & Replies</h3>
+      <div class="count">0 items</div>
+    </div>
+    <div class="empty-state">
+      <div class="icon">🐦</div>
+      No tracked Twitter activity yet.<br>
+      Notable replies and mentions will appear here.
+    </div>
+  </div>
+
+  <!-- Goals & Expectations -->
+  <div class="expectations-section">
+    <div class="section-header">
+      <h2>📋 Goals & Expectations</h2>
+    </div>
+    <div class="expect-grid">
+      <div class="expect-card">
+        <h4>🎯 What Greg Handles (SM Manager)</h4>
+        <div class="expect-item"><input type="checkbox" id="e1"> <label for="e1">Content strategy & scheduling</label></div>
+        <div class="expect-item"><input type="checkbox" id="e2"> <label for="e2">Write captions & post copy</label></div>
+        <div class="expect-item"><input type="checkbox" id="e3"> <label for="e3">Reddit posts & community engagement</label></div>
+        <div class="expect-item"><input type="checkbox" id="e4"> <label for="e4">Cross-platform distribution plan</label></div>
+        <div class="expect-item"><input type="checkbox" id="e5"> <label for="e5">Discord community activation</label></div>
+        <div class="expect-item"><input type="checkbox" id="e6"> <label for="e6">Track metrics & report weekly</label></div>
+        <div class="expect-item"><input type="checkbox" id="e7"> <label for="e7">Flag comments needing Sawyer's reply</label></div>
+        <div class="expect-item"><input type="checkbox" id="e8"> <label for="e8">TikTok posting strategy</label></div>
+      </div>
+      <div class="expect-card">
+        <h4>🎮 What Sawyer Handles (Creator)</h4>
+        <div class="expect-item"><input type="checkbox" id="s1"> <label for="s1">Stream on schedule</label></div>
+        <div class="expect-item"><input type="checkbox" id="s2"> <label for="s2">Review & approve tier lists</label></div>
+        <div class="expect-item"><input type="checkbox" id="s3"> <label for="s3">Reply to flagged comments (links in dashboard)</label></div>
+        <div class="expect-item"><input type="checkbox" id="s4"> <label for="s4">Record coaching sessions for content</label></div>
+        <div class="expect-item"><input type="checkbox" id="s5"> <label for="s5">Provide hot takes for Twitter posts</label></div>
+        <div class="expect-item"><input type="checkbox" id="s6"> <label for="s6">Approve posts before publishing</label></div>
+        <div class="expect-item"><input type="checkbox" id="s7"> <label for="s7">Share content ideas & feedback</label></div>
+        <div class="expect-item"><input type="checkbox" id="s8"> <label for="s8">Engage in Discord periodically</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes & Ideas -->
+  <div class="notes-section">
+    <div class="section-header">
+      <h2>💡 Notes, Ideas & Content Board</h2>
+    </div>
+    <div class="notes-grid">
+      <div class="note-box">
+        <h4 class="sawyer">🟣 Sawyer's Notes</h4>
+        <textarea id="sawyer-notes" placeholder="Sawyer — drop ideas, feedback, content you want to make, anything..."></textarea>
+        <div class="save-indicator" id="sawyer-notes-status"></div>
+      </div>
+      <div class="note-box">
+        <h4 class="greg">🔴 Greg's Notes</h4>
+        <textarea id="greg-notes" placeholder="Greg — strategy notes, scheduling ideas, things to discuss..."></textarea>
+        <div class="save-indicator" id="greg-notes-status"></div>
+      </div>
+    </div>
+
+    <!-- Shared Idea Board -->
+    <div style="margin-top: 20px;">
+      <h4 style="color: #fff; font-size: 14px; margin-bottom: 8px;">📌 Shared Content Ideas</h4>
+      <div class="idea-input-row">
+        <input type="text" id="idea-input" placeholder="Add a content idea, video title, or topic...">
+        <button onclick="addIdea()">+ Add</button>
+      </div>
+      <ul class="idea-list" id="idea-list"></ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Sawyer Jungle SM Dashboard • Built by Greg & The Crow 🪶 • <a href="#">Powered by The Crow's Nest</a>
+  <br>Data collected manually — updated weekly during trial period
+</div>
+
+<script>
+// === localStorage persistence ===
+const STORAGE_KEY = 'sawyer-dashboard';
+
+function loadData() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch { return {}; }
+}
+
+function saveData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// --- Notes ---
+function initNotes() {
+  const data = loadData();
+  document.getElementById('sawyer-notes').value = data.sawyerNotes || '';
+  document.getElementById('greg-notes').value = data.gregNotes || '';
+}
+
+function setupNoteAutoSave(id, key) {
+  const textarea = document.getElementById(id);
+  const status = document.getElementById(id + '-status');
+  let timer;
+  textarea.addEventListener('input', () => {
+    clearTimeout(timer);
+    status.textContent = 'typing...';
+    status.className = 'save-indicator';
+    timer = setTimeout(() => {
+      const data = loadData();
+      data[key] = textarea.value;
+      saveData(data);
+      status.textContent = '✓ saved';
+      status.className = 'save-indicator saved';
+    }, 800);
+  });
+}
+
+// --- Ideas ---
+function loadIdeas() {
+  const data = loadData();
+  return data.ideas || [];
+}
+
+function saveIdeas(ideas) {
+  const data = loadData();
+  data.ideas = ideas;
+  saveData(data);
+}
+
+function renderIdeas() {
+  const ideas = loadIdeas();
+  const list = document.getElementById('idea-list');
+  list.innerHTML = '';
+  ideas.forEach((idea, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span class="idea-text">${escapeHtml(idea.text)}</span>
+      <span class="idea-author">${escapeHtml(idea.author)} • ${idea.date}</span>
+      <span class="idea-delete" onclick="deleteIdea(${i})">×</span>
+    `;
+    list.appendChild(li);
+  });
+}
+
+function addIdea() {
+  const input = document.getElementById('idea-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const ideas = loadIdeas();
+  ideas.unshift({
+    text: text,
+    author: 'Added',
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  });
+  saveIdeas(ideas);
+  renderIdeas();
+  input.value = '';
+}
+
+function deleteIdea(i) {
+  const ideas = loadIdeas();
+  ideas.splice(i, 1);
+  saveIdeas(ideas);
+  renderIdeas();
+}
+
+// Enter key to add idea
+document.getElementById('idea-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') addIdea();
+});
+
+// --- Checkboxes ---
+function initCheckboxes() {
+  const data = loadData();
+  const checks = data.checks || {};
+  document.querySelectorAll('.expect-item input[type="checkbox"]').forEach(cb => {
+    cb.checked = !!checks[cb.id];
+    updateCheckStyle(cb);
+    cb.addEventListener('change', () => {
+      const d = loadData();
+      d.checks = d.checks || {};
+      d.checks[cb.id] = cb.checked;
+      saveData(d);
+      updateCheckStyle(cb);
+    });
+  });
+}
+
+function updateCheckStyle(cb) {
+  const item = cb.closest('.expect-item');
+  if (cb.checked) item.classList.add('checked');
+  else item.classList.remove('checked');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// --- Init ---
+initNotes();
+setupNoteAutoSave('sawyer-notes', 'sawyerNotes');
+setupNoteAutoSave('greg-notes', 'gregNotes');
+renderIdeas();
+initCheckboxes();
+</script>
+
+</body>
+</html>
