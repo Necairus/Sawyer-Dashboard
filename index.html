@@ -66,8 +66,6 @@
   }
   .stat-card.twitter .value { color: #1da1f2; }
   .stat-card.youtube .value { color: #ff0000; }
-  .stat-card.youtube2 .value { color: #ff4444; }
-  .stat-card.youtube3 .value { color: #ff6666; }
   .stat-card.twitch .value { color: #9146ff; }
   .stat-card.discord .value { color: #5865f2; }
   .stat-card.metafy .value { color: #00d4aa; }
@@ -277,6 +275,33 @@
   }
   .filter-btn.active { background: #e94560; color: #fff; border-color: #e94560; }
   .filter-btn:hover { border-color: #e94560; }
+
+  /* YouTube unified feed */
+  .yt-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #1a1a2e;
+    transition: background 0.15s;
+  }
+  .yt-row:hover { background: #1a1a2e; }
+  .yt-row:last-child { border-bottom: none; }
+  .yt-title { font-size: 13px; color: #ccc; font-weight: 600; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .yt-stats { font-size: 12px; color: #888; white-space: nowrap; }
+  .yt-date { font-size: 11px; color: #555; white-space: nowrap; }
+  .yt-link {
+    font-size: 12px; color: #ff0000; text-decoration: none; font-weight: 600; white-space: nowrap;
+  }
+  .yt-link:hover { color: #ff6b6b; }
+  .yt-ch-tag {
+    display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+  }
+  .yt-ch-tag.main { background: #ff000022; color: #ff4444; }
+  .yt-ch-tag.bungle { background: #9146ff22; color: #b380ff; }
+  .yt-ch-tag.pocket { background: #f0a50022; color: #f0a500; }
 </style>
 </head>
 <body>
@@ -302,22 +327,10 @@
       <div class="sub-stat">Verified ✓ • @SawyerJunglelol</div>
     </div>
     <div class="stat-card youtube">
-      <div class="platform">YT Main</div>
+      <div class="platform">YouTube (3 channels)</div>
       <div class="value">48.5K</div>
-      <div class="label">Subscribers</div>
-      <div class="sub-stat"><a href="https://youtube.com/@Sawyerjungle" target="_blank" style="color:#ff0000;text-decoration:none;">@Sawyerjungle</a> • Guides</div>
-    </div>
-    <div class="stat-card youtube2">
-      <div class="platform">YT Bungle</div>
-      <div class="value">1.99K</div>
-      <div class="label">Subscribers</div>
-      <div class="sub-stat"><a href="https://youtube.com/channel/UClNLYD0lxPu1AWcBrk_9Caw" target="_blank" style="color:#ff4444;text-decoration:none;">Sawyer Bungle</a> • VODs</div>
-    </div>
-    <div class="stat-card youtube3">
-      <div class="platform">YT Pokemon Pocket</div>
-      <div class="value">—</div>
-      <div class="label">Subscribers</div>
-      <div class="sub-stat"><a href="https://youtube.com/channel/UCDazdaWZlhtWoxAhsnOhcAQ" target="_blank" style="color:#ff6666;text-decoration:none;">Pokemon Pocket</a></div>
+      <div class="label">Main Subs</div>
+      <div class="sub-stat">Bungle: 1.99K • Pokemon Pocket: TBD</div>
     </div>
     <div class="stat-card twitch">
       <div class="platform">Twitch</div>
@@ -568,83 +581,76 @@
     </div>
   </div>
 
-  <!-- YouTube & Twitter Feeds -->
-  <div class="two-col">
-    <div class="feed-panel">
-      <div class="panel-header">
-        <h3>🔴 YouTube Recent Videos</h3>
-        <div class="count">5 items</div>
-      </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">Sawyer Jungle (Main)</span>
-          <span class="status-tag needs-reply" style="background:#e94560;color:#fff;">🔥 NEW</span>
-        </div>
-        <div class="source">JUNGLE Tier LIST | Season 16 | High & LOW ELO</div>
-        <div class="text">205 views • 8 likes • 3 comments — Linked from Reddit post</div>
-        <a href="https://www.youtube.com/watch?v=RNcFjCKxCRw" target="_blank">→ Watch on YouTube</a>
-      </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">Sawyer Jungle (Main)</span>
-          <span class="date">Feb 6</span>
-        </div>
-        <div class="source">HOW to ZYRA jungle in SEASON 16!!!</div>
-        <div class="text">4,767 views • 125 likes — Best performing this month</div>
-        <a href="https://www.youtube.com/watch?v=gXMT_8XjT-U" target="_blank">→ Watch</a>
-      </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">Sawyer Jungle (Main)</span>
-          <span class="date">Feb 10</span>
-        </div>
-        <div class="source">HOW to DARIUS jungle in SEASON 16!!!</div>
-        <div class="text">3,955 views • 105 likes</div>
-        <a href="https://www.youtube.com/watch?v=bAn4Qwq7Cp0" target="_blank">→ Watch</a>
-      </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">Sawyer Bungle (VODs)</span>
-          <span class="date">Feb 10</span>
-        </div>
-        <div class="source">JUNGLE ranked CLIMB S16 (stream VOD)</div>
-        <div class="text">4,223 views • 51 likes — VOD channel</div>
-        <a href="https://www.youtube.com/watch?v=tGqdl765cds" target="_blank">→ Watch</a>
-      </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">Sawyer Jungle (Main)</span>
-          <span class="date">Feb 14</span>
-        </div>
-        <div class="source">Bel'veth guy</div>
-        <div class="text">5,932 views • 63 likes — Title needs work</div>
-        <a href="https://www.youtube.com/watch?v=l1vVB--sWBY" target="_blank">→ Watch</a>
+  <!-- YouTube Unified Feed -->
+  <div class="feed-panel" style="margin-bottom: 32px;">
+    <div class="panel-header">
+      <h3>🔴 YouTube — All Channels</h3>
+      <div class="count" style="display:flex;gap:8px;align-items:center;">
+        <span class="yt-ch-tag main">Main</span>
+        <span class="yt-ch-tag bungle">Bungle</span>
+        <span class="yt-ch-tag pocket">Pocket</span>
       </div>
     </div>
+    <div class="yt-row">
+      <div class="yt-title">JUNGLE Tier LIST | Season 16 | High & LOW ELO</div>
+      <span class="yt-ch-tag main">Main</span>
+      <div class="yt-stats">205 views • 8 likes • 3 comments</div>
+      <div class="yt-date">Feb 16</div>
+      <a href="https://www.youtube.com/watch?v=RNcFjCKxCRw" target="_blank" class="yt-link">Watch →</a>
+    </div>
+    <div class="yt-row">
+      <div class="yt-title">Bel'veth guy</div>
+      <span class="yt-ch-tag main">Main</span>
+      <div class="yt-stats">5,932 views • 63 likes</div>
+      <div class="yt-date">Feb 14</div>
+      <a href="https://www.youtube.com/watch?v=l1vVB--sWBY" target="_blank" class="yt-link">Watch →</a>
+    </div>
+    <div class="yt-row">
+      <div class="yt-title">HOW to DARIUS jungle in SEASON 16!!!</div>
+      <span class="yt-ch-tag main">Main</span>
+      <div class="yt-stats">3,955 views • 105 likes</div>
+      <div class="yt-date">Feb 10</div>
+      <a href="https://www.youtube.com/watch?v=bAn4Qwq7Cp0" target="_blank" class="yt-link">Watch →</a>
+    </div>
+    <div class="yt-row">
+      <div class="yt-title">JUNGLE ranked CLIMB S16 (stream VOD)</div>
+      <span class="yt-ch-tag bungle">Bungle</span>
+      <div class="yt-stats">4,223 views • 51 likes</div>
+      <div class="yt-date">Feb 10</div>
+      <a href="https://www.youtube.com/watch?v=tGqdl765cds" target="_blank" class="yt-link">Watch →</a>
+    </div>
+    <div class="yt-row">
+      <div class="yt-title">HOW to ZYRA jungle in SEASON 16!!!</div>
+      <span class="yt-ch-tag main">Main</span>
+      <div class="yt-stats">4,767 views • 125 likes</div>
+      <div class="yt-date">Feb 6</div>
+      <a href="https://www.youtube.com/watch?v=gXMT_8XjT-U" target="_blank" class="yt-link">Watch →</a>
+    </div>
+  </div>
 
-    <div class="feed-panel">
-      <div class="panel-header">
-        <h3>🔵 Twitter/X Mentions</h3>
-        <div class="count">2 items</div>
+  <!-- Twitter -->
+  <div class="feed-panel" style="margin-bottom: 32px;">
+    <div class="panel-header">
+      <h3>🔵 Twitter/X Mentions</h3>
+      <div class="count">2 items</div>
+    </div>
+    <div class="feed-comment">
+      <div class="meta">
+        <span class="author">@SawyerJunglelol</span>
+        <span class="status-tag" style="background:#1a1a2e;color:#1da1f2;">🔥 41.7K views</span>
       </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">@SawyerJunglelol</span>
-          <span class="status-tag" style="background:#1a1a2e;color:#1da1f2;">🔥 41.7K views</span>
-        </div>
-        <div class="source">Tier List Tweet</div>
-        <div class="text">409 likes • 16 RT • 183 bookmarks</div>
-        <a href="https://x.com/SawyerJunglelol/status/2022613246898016686" target="_blank">→ View on X</a>
+      <div class="source">Tier List Tweet</div>
+      <div class="text">409 likes • 16 RT • 183 bookmarks</div>
+      <a href="https://x.com/SawyerJunglelol/status/2022613246898016686" target="_blank">→ View on X</a>
+    </div>
+    <div class="feed-comment">
+      <div class="meta">
+        <span class="author">@xdxdxd556</span>
+        <span class="status-tag needs-reply">Content Idea</span>
       </div>
-      <div class="feed-comment">
-        <div class="meta">
-          <span class="author">@xdxdxd556</span>
-          <span class="status-tag needs-reply">Content Idea</span>
-        </div>
-        <div class="source">Reply to Tier List</div>
-        <div class="text">"Can u make a high elo jungle tier list next?"</div>
-        <a href="https://x.com/xdxdxd556/status/2022825358588821765" target="_blank">→ View on X</a>
-      </div>
+      <div class="source">Reply to Tier List</div>
+      <div class="text">"Can u make a high elo jungle tier list next?"</div>
+      <a href="https://x.com/xdxdxd556/status/2022825358588821765" target="_blank">→ View on X</a>
     </div>
   </div>
 
