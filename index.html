@@ -12,58 +12,67 @@
     color: #e0e0e0;
     min-height: 100vh;
   }
-
   .header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     padding: 24px 32px;
     border-bottom: 2px solid #e94560;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .header h1 {
-    font-size: 28px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .header h1 { font-size: 28px; color: #fff; display: flex; align-items: center; gap: 12px; }
   .header h1 span { color: #e94560; }
   .header .date { color: #888; font-size: 14px; }
   .header .managed-by { color: #aaa; font-size: 13px; text-align: right; }
   .header .managed-by strong { color: #e94560; }
-
   .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  .pulse { display: inline-block; width: 8px; height: 8px; background: #00d4aa; border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* Priority Actions */
+  .priority-section {
+    background: linear-gradient(135deg, #1a0a0f 0%, #1a1a2e 100%);
+    border: 2px solid #e94560;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .priority-section h2 { color: #e94560; font-size: 20px; margin-bottom: 16px; }
+  .priority-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid #2a1a2e;
+  }
+  .priority-item:last-child { border-bottom: none; }
+  .priority-num {
+    background: #e94560; color: #fff; font-weight: 800; font-size: 14px;
+    min-width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .priority-content h3 { color: #fff; font-size: 15px; margin-bottom: 4px; }
+  .priority-content p { color: #999; font-size: 13px; line-height: 1.5; }
+  .priority-tag {
+    display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;
+  }
+  .priority-tag.money { background: #00d4aa33; color: #00d4aa; }
+  .priority-tag.growth { background: #1da1f233; color: #1da1f2; }
+  .priority-tag.content { background: #f0a50033; color: #f0a500; }
+  .priority-tag.urgent { background: #e9456033; color: #e94560; }
 
   /* Stats Grid */
   .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px; margin-bottom: 32px;
   }
   .stat-card {
-    background: #13131a;
-    border: 1px solid #2a2a3a;
-    border-radius: 12px;
-    padding: 18px;
-    text-align: center;
-    transition: border-color 0.2s;
+    background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+    padding: 18px; text-align: center; transition: border-color 0.2s;
   }
   .stat-card:hover { border-color: #e94560; }
-  .stat-card .platform {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #888;
-    margin-bottom: 6px;
-  }
+  .stat-card .platform { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-bottom: 6px; }
   .stat-card .value { font-size: 28px; font-weight: 700; color: #fff; }
   .stat-card .label { font-size: 12px; color: #666; margin-top: 4px; }
-  .stat-card .sub-stat {
-    font-size: 11px; color: #555; margin-top: 8px;
-    border-top: 1px solid #222; padding-top: 8px;
-  }
+  .stat-card .sub-stat { font-size: 11px; color: #555; margin-top: 8px; border-top: 1px solid #222; padding-top: 8px; }
+  .stat-card .change { font-size: 12px; font-weight: 700; margin-top: 4px; }
+  .stat-card .change.up { color: #00d4aa; }
   .stat-card.twitter .value { color: #1da1f2; }
   .stat-card.youtube .value { color: #ff0000; }
   .stat-card.twitch .value { color: #9146ff; }
@@ -71,60 +80,33 @@
   .stat-card.metafy .value { color: #00d4aa; }
   .stat-card.reddit .value { color: #ff4500; }
 
-  /* Section headers */
-  .section-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
-  }
-  .section-header h2 {
-    font-size: 20px; color: #fff; display: flex; align-items: center; gap: 10px;
-  }
-  .section-header .badge {
-    background: #e94560; color: #fff; font-size: 11px;
-    padding: 2px 10px; border-radius: 99px; font-weight: 600;
-  }
-
   /* Reddit Inbox */
   .reddit-inbox {
-    background: #13131a;
-    border: 1px solid #2a2a3a;
-    border-radius: 12px;
-    margin-bottom: 32px;
-    overflow: hidden;
+    background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+    margin-bottom: 32px; overflow: hidden;
   }
   .reddit-inbox .inbox-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #2a2a3a;
-    display: flex; justify-content: space-between; align-items: center;
-    background: #16161f;
+    padding: 16px 20px; border-bottom: 1px solid #2a2a3a;
+    display: flex; justify-content: space-between; align-items: center; background: #16161f;
   }
-  .reddit-inbox .inbox-header h3 {
-    font-size: 18px; color: #fff; display: flex; align-items: center; gap: 10px;
-  }
+  .reddit-inbox .inbox-header h3 { font-size: 18px; color: #fff; display: flex; align-items: center; gap: 10px; }
   .inbox-stats { font-size: 12px; color: #888; }
   .inbox-stats strong { color: #ff4500; }
-
   .comment-item {
-    padding: 14px 20px;
-    border-bottom: 1px solid #1a1a2e;
-    transition: background 0.15s;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 12px;
-    align-items: start;
+    padding: 14px 20px; border-bottom: 1px solid #1a1a2e;
+    transition: background 0.15s; display: grid;
+    grid-template-columns: 1fr auto; gap: 12px; align-items: start;
   }
   .comment-item:hover { background: #1a1a2e; }
   .comment-item:last-child { border-bottom: none; }
   .comment-left { min-width: 0; }
   .comment-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .comment-user {
-    font-weight: 700; font-size: 13px; color: #ff4500;
-    margin-bottom: 2px;
-  }
+  .comment-user { font-weight: 700; font-size: 13px; color: #ff4500; margin-bottom: 2px; }
   .comment-user .pts { color: #666; font-weight: 400; font-size: 11px; margin-left: 6px; }
-  .comment-text {
-    font-size: 13px; color: #ccc; line-height: 1.5; margin-bottom: 6px;
-  }
+  .comment-text { font-size: 13px; color: #ccc; line-height: 1.5; margin-bottom: 6px; }
   .comment-context { font-size: 11px; color: #555; }
+  .comment-draft { font-size: 12px; color: #00d4aa; line-height: 1.5; margin-top: 6px; padding: 8px; background: #0a1a15; border-radius: 6px; border: 1px solid #1a3a2e; }
+  .comment-draft strong { color: #00ffaa; }
   .reply-btn {
     display: inline-block; font-size: 12px; color: #fff; background: #e94560;
     text-decoration: none; font-weight: 600; padding: 5px 14px; border-radius: 6px;
@@ -138,30 +120,23 @@
   }
   .status-tag.needs-reply { background: #e9456033; color: #e94560; }
   .status-tag.replied { background: #00d4aa33; color: #00d4aa; }
-
-  /* View Rate Bar */
-  .view-rate-section {
-    background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
-    padding: 20px; margin-bottom: 32px;
+  .status-tag.draft { background: #f0a50033; color: #f0a500; }
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 8px; padding: 0 20px; padding-top: 12px; }
+  .filter-btn {
+    background: #1a1a2e; border: 1px solid #2a2a3a; color: #888;
+    font-size: 11px; padding: 4px 12px; border-radius: 20px; cursor: pointer;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
   }
-  .view-rate-section h3 { color: #fff; margin-bottom: 12px; font-size: 16px; }
-  .rate-bar-container { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-  .rate-bar-label { width: 120px; font-size: 13px; color: #aaa; }
-  .rate-bar-bg {
-    flex: 1; height: 24px; background: #1a1a2e; border-radius: 12px; overflow: hidden;
-  }
-  .rate-bar-fill { height: 100%; border-radius: 12px; }
-  .rate-bar-pct { width: 60px; text-align: right; font-weight: 700; font-size: 14px; }
-  .rate-bar-fill.red { background: linear-gradient(90deg, #e94560, #ff6b6b); }
-  .rate-bar-fill.yellow { background: linear-gradient(90deg, #f0a500, #ffd700); }
-  .rate-bar-fill.green { background: linear-gradient(90deg, #00d4aa, #00ff88); }
-  .rate-target { font-size: 12px; color: #555; text-align: right; }
+  .filter-btn.active { background: #e94560; color: #fff; border-color: #e94560; }
+  .filter-btn:hover { border-color: #e94560; }
 
   /* Goals */
   .goals-section {
     background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
     padding: 20px; margin-bottom: 32px;
   }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .section-header h2 { font-size: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
   .goal-row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 10px 0; border-bottom: 1px solid #1a1a2e;
@@ -173,39 +148,28 @@
   .goal-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #e94560, #ff6b6b); }
   .goal-numbers { font-size: 13px; color: #888; min-width: 100px; text-align: right; }
 
-  /* Two-col layout */
-  .two-col {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;
-  }
-  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
-
+  /* Feed panels */
   .feed-panel {
     background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
-    max-height: 500px; overflow-y: auto;
+    max-height: 500px; overflow-y: auto; margin-bottom: 32px;
   }
   .feed-panel .panel-header {
     padding: 16px 20px; border-bottom: 1px solid #2a2a3a;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .feed-panel .panel-header h3 {
-    font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px;
-  }
+  .feed-panel .panel-header h3 { font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
   .feed-panel .count { font-size: 12px; color: #888; }
-
   .feed-comment {
     padding: 14px 20px; border-bottom: 1px solid #1a1a2e; transition: background 0.15s;
   }
   .feed-comment:hover { background: #1a1a2e; }
   .feed-comment:last-child { border-bottom: none; }
-  .feed-comment .meta {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
-  }
+  .feed-comment .meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
   .feed-comment .author { font-weight: 600; font-size: 13px; color: #ccc; }
   .feed-comment .text { font-size: 13px; color: #aaa; line-height: 1.5; margin-bottom: 6px; }
   .feed-comment .source { font-size: 11px; color: #555; margin-bottom: 4px; }
   .feed-comment a { font-size: 12px; color: #e94560; text-decoration: none; font-weight: 600; }
   .feed-comment a:hover { color: #ff6b6b; }
-  .feed-comment .date { font-size: 11px; color: #555; }
 
   /* Notes */
   .notes-section {
@@ -214,13 +178,8 @@
   }
   .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
   @media (max-width: 900px) { .notes-grid { grid-template-columns: 1fr; } }
-  .note-box {
-    background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 8px; padding: 16px;
-  }
-  .note-box h4 {
-    font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
-    display: flex; align-items: center; gap: 8px;
-  }
+  .note-box { background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 8px; padding: 16px; }
+  .note-box h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
   .note-box h4.sawyer { color: #9146ff; }
   .note-box h4.greg { color: #e94560; }
   .note-box textarea {
@@ -253,47 +212,17 @@
   .idea-list li .idea-delete { color: #e94560; cursor: pointer; margin-left: 8px; font-size: 16px; opacity: 0.5; }
   .idea-list li .idea-delete:hover { opacity: 1; }
 
-  .footer {
-    text-align: center; padding: 24px; color: #333; font-size: 12px;
-    border-top: 1px solid #1a1a2e;
-  }
-  .footer a { color: #e94560; text-decoration: none; }
-
-  .pulse {
-    display: inline-block; width: 8px; height: 8px; background: #00d4aa;
-    border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-  .filter-bar {
-    display: flex; gap: 8px; margin-bottom: 8px; padding: 0 20px;
-  }
-  .filter-btn {
-    background: #1a1a2e; border: 1px solid #2a2a3a; color: #888;
-    font-size: 11px; padding: 4px 12px; border-radius: 20px; cursor: pointer;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .filter-btn.active { background: #e94560; color: #fff; border-color: #e94560; }
-  .filter-btn:hover { border-color: #e94560; }
-
-  /* YouTube unified feed */
   .yt-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto auto;
-    gap: 12px;
-    align-items: center;
-    padding: 12px 20px;
-    border-bottom: 1px solid #1a1a2e;
-    transition: background 0.15s;
+    display: grid; grid-template-columns: 1fr auto auto auto auto;
+    gap: 12px; align-items: center; padding: 12px 20px;
+    border-bottom: 1px solid #1a1a2e; transition: background 0.15s;
   }
   .yt-row:hover { background: #1a1a2e; }
   .yt-row:last-child { border-bottom: none; }
   .yt-title { font-size: 13px; color: #ccc; font-weight: 600; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .yt-stats { font-size: 12px; color: #888; white-space: nowrap; }
   .yt-date { font-size: 11px; color: #555; white-space: nowrap; }
-  .yt-link {
-    font-size: 12px; color: #ff0000; text-decoration: none; font-weight: 600; white-space: nowrap;
-  }
+  .yt-link { font-size: 12px; color: #ff0000; text-decoration: none; font-weight: 600; white-space: nowrap; }
   .yt-link:hover { color: #ff6b6b; }
   .yt-ch-tag {
     display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
@@ -301,7 +230,12 @@
   }
   .yt-ch-tag.main { background: #ff000022; color: #ff4444; }
   .yt-ch-tag.bungle { background: #9146ff22; color: #b380ff; }
-  .yt-ch-tag.pocket { background: #f0a50022; color: #f0a500; }
+
+  .footer {
+    text-align: center; padding: 24px; color: #333; font-size: 12px;
+    border-top: 1px solid #1a1a2e;
+  }
+  .footer a { color: #e94560; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -309,40 +243,104 @@
 <div class="header">
   <div>
     <h1>🎮 <span>SAWYER JUNGLE</span> — SM Dashboard</h1>
-    <div class="date"><span class="pulse"></span>Last updated: February 16, 2026 — v2</div>
+    <div class="date"><span class="pulse"></span>Last updated: February 17, 2026 — v3 (Day 2)</div>
   </div>
   <div class="managed-by">
-    Managed by <strong>Greg</strong> & <strong>The Crow</strong> 🪶
+    Managed by <strong>Demic Media</strong> 🪶
   </div>
 </div>
 
 <div class="container">
 
-  <!-- Platform Stats -->
+  <!-- PRIORITY ACTIONS — TOP OF PAGE -->
+  <div class="priority-section">
+    <h2>🔥 Priority Actions</h2>
+
+    <div class="priority-item">
+      <div class="priority-num">1</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag urgent">URGENT</span> Reply to Reddit Comments</h3>
+        <p>6 high-value comments identified below with draft replies ready. Space them out over hours for organic appearance. Each reply includes Discord link where natural.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">2</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag money">MONEY</span> The Ultimate Jungle Guide — Platform Decision</h3>
+        <p>Release individual guides → bundle behind subscription. Platform comparison done: Skool ($9/mo) recommended for guide hosting + community. Keep Metafy for coaching. See full breakdown in platform comparison doc.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">3</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag content">CONTENT</span> "What Do I Play Once I Outgrow Warwick?"</h3>
+        <p>Validated by Reddit — WW placement was #1 debate. Quote: "WW falls off a cliff gold+... I had to let the dog go this season." Video + Reddit post ready to create.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">4</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag content">CONTENT</span> Request Night Highlights Series</h3>
+        <p>Weekly Request Nights = untapped content goldmine. Clip troll builds + coaching moments → YouTube highlights → TikTok shorts → Reddit posts. One stream = a week of content.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">5</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag content">CONTENT</span> Bad Builds Series + "The Build Doesn't Matter"</h3>
+        <p>Stream bad builds → clip highlights → contrarian thesis video: "Your Build Doesn't Matter (and I'll Prove It)." Backs up coaching brand — you sell knowledge, not builds.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">6</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag growth">GROWTH</span> Discord Activation</h3>
+        <p>628 members, mostly lurkers. Add: Champ Request channel, weekly poll, tier list debate thread, stream ping role, clip-of-the-week. Turn lurkers into an army.</p>
+      </div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-num">7</div>
+      <div class="priority-content">
+        <h3><span class="priority-tag growth">GROWTH</span> Twitter Bio + Discord Link Everywhere</h3>
+        <p>Update bio: "Former NACL Head Coach | Challenger since S3 | Jungle guides & coaching." Discord link in EVERY future Reddit/Twitter/YouTube post.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Stats — Day 2 -->
   <div class="stats-grid">
     <div class="stat-card twitter">
       <div class="platform">Twitter / X</div>
       <div class="value">2,355</div>
       <div class="label">Followers</div>
+      <div class="change up">+6 from Day 0</div>
       <div class="sub-stat">Verified ✓ • @SawyerJunglelol</div>
     </div>
     <div class="stat-card youtube">
-      <div class="platform">YouTube (3 channels)</div>
-      <div class="value">48.5K</div>
+      <div class="platform">YouTube</div>
+      <div class="value">48.7K</div>
       <div class="label">Main Subs</div>
-      <div class="sub-stat">Bungle: 1.99K • Pokemon Pocket: TBD</div>
+      <div class="change up">+200 from Day 0</div>
+      <div class="sub-stat">Bungle: 1.99K</div>
     </div>
     <div class="stat-card twitch">
       <div class="platform">Twitch</div>
-      <div class="value">43</div>
-      <div class="label">Avg Viewers</div>
-      <div class="sub-stat">Peak: 91 • Top 0.53%</div>
+      <div class="value">2,362</div>
+      <div class="label">Followers</div>
+      <div class="sub-stat">Avg viewers: 43 • Peak: 91</div>
     </div>
     <div class="stat-card discord">
       <div class="platform">Discord</div>
-      <div class="value">~622</div>
+      <div class="value">628</div>
       <div class="label">Members</div>
-      <div class="sub-stat">+2 from Reddit post</div>
+      <div class="change up">+8 from Day 0</div>
+      <div class="sub-stat">No link in original post!</div>
     </div>
     <div class="stat-card metafy">
       <div class="platform">Metafy</div>
@@ -351,188 +349,103 @@
       <div class="sub-stat">100% rebook rate</div>
     </div>
     <div class="stat-card reddit">
-      <div class="platform">Reddit</div>
-      <div class="value">148</div>
-      <div class="label">Upvotes (1st post)</div>
-      <div class="sub-stat">u/SawyerGG • 91 comments • 82%</div>
+      <div class="platform">Reddit (Day 2)</div>
+      <div class="value">241</div>
+      <div class="label">Upvotes</div>
+      <div class="change up">+90 from Day 1</div>
+      <div class="sub-stat">130 comments • 84% ratio • r/Jungle_Mains</div>
     </div>
   </div>
 
-  <!-- REDDIT COMMENT INBOX — Main Focus -->
+  <!-- REDDIT COMMENT INBOX with Draft Replies -->
   <div class="reddit-inbox">
     <div class="inbox-header">
-      <h3>🟠 Reddit Comment Inbox — Tier List Post</h3>
+      <h3>🟠 Reddit Comment Inbox — Reply Campaign</h3>
       <div class="inbox-stats">
-        <strong>148</strong> upvotes • <strong>91</strong> comments • r/Jungle_Mains
-        &nbsp;|&nbsp;
-        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" style="color:#ff4500;text-decoration:none;font-weight:600;">Open Full Thread →</a>
+        <strong>241</strong> upvotes • <strong>130</strong> comments •
+        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" style="color:#ff4500;text-decoration:none;font-weight:600;">Open Thread →</a>
       </div>
     </div>
-    <div class="filter-bar" style="padding-top:12px;">
-      <button class="filter-btn active" onclick="filterComments('all')">All</button>
-      <button class="filter-btn" onclick="filterComments('needs-reply')">Needs Reply</button>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterComments('all')">All (6)</button>
+      <button class="filter-btn" onclick="filterComments('draft')">Draft Ready</button>
       <button class="filter-btn" onclick="filterComments('replied')">Replied</button>
     </div>
 
-    <!-- Comment 1 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/Furieales <span class="pts">146 pts</span></div>
-        <div class="comment-text">"If you have any questions I won't be answering them," kekw</div>
-        <div class="comment-context">Top comment • Reply by u/loloider123 (30 pts): "Based"</div>
+        <div class="comment-user">u/pkfootball09 <span class="pts">Fan</span></div>
+        <div class="comment-text">Positive comment about Sawyer's content — engaged viewer</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> Appreciate the love! If you want more breakdowns like this, we go deeper in Discord — champion matchups, pathing for each tier, etc. discord.gg/fJcHZarpj</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
-        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/comment/furieales_top/" target="_blank" class="reply-btn">Reply →</a>
-      </div>
-    </div>
-
-    <!-- Comment 2 -->
-    <div class="comment-item" data-status="needs-reply">
-      <div class="comment-left">
-        <div class="comment-user">u/ChampDebater42 <span class="pts">89 pts</span></div>
-        <div class="comment-text">Zyra in C tier?? She's been hard carrying in low elo with her plant damage. No way she's that low.</div>
-        <div class="comment-context">Champion placement debate — good engagement opportunity</div>
-      </div>
-      <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
 
-    <!-- Comment 3 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/NaafiriOTP <span class="pts">67 pts</span></div>
-        <div class="comment-text">Where's Naafiri? She's not even on the list. Is she just not viable in jungle at all right now?</div>
-        <div class="comment-context">Missing champion — direct question, high priority</div>
+        <div class="comment-user">u/AllSystemsABro <span class="pts">Gwen Convert</span></div>
+        <div class="comment-text">Started playing Gwen after Sawyer's video — 71% winrate</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> 71% WR on Gwen?? That's insane. She's so underrated in low elo because people don't respect her scaling. You're proof the tier list works. Come share your op.gg in Discord, people would love to see that climb — discord.gg/fJcHZarpj</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
 
-    <!-- Comment 4 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/JungleGapEverGame <span class="pts">52 pts</span></div>
-        <div class="comment-text">This is actually one of the better tier lists I've seen for low elo. Most people just copy high elo lists. Nice to see someone actually thinking about what works in gold and below.</div>
-        <div class="comment-context">Positive feedback — good to acknowledge</div>
+        <div class="comment-user">u/purple_shadow3 <span class="pts">Beginner</span></div>
+        <div class="comment-text">New to jungle, asking for champion advice</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> If you're just starting jungle, the Z-tier champs are your best friends — Diana, Mundo, Jax, Xin, Warwick. Simple kits, strong clears, and they teach you jungle fundamentals without needing crazy mechanics. I break down each one on YouTube if you want the full clear guides.</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
 
-    <!-- Comment 5 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/ViMainBTW <span class="pts">45 pts</span></div>
-        <div class="comment-text">Vi in A tier feels right but I think she could be S with the new jungle pet changes. Her clear speed is insane now.</div>
-        <div class="comment-context">Champion discussion — could lead to content idea</div>
+        <div class="comment-user">u/Gokublackpilled <span class="pts">Kayn Question</span></div>
+        <div class="comment-text">Asking about Kayn placement / form choice</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> Kayn's tricky because you're basically playing two different champs depending on form. In low elo, Red Kayn is almost always the play — people don't kite properly and he just sustains through everything. Blue Kayn needs your team to have frontline, which in low elo... good luck.</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
 
-    <!-- Comment 6 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/BronzeWarwick <span class="pts">38 pts</span></div>
-        <div class="comment-text">I've been watching your Bel'Veth content and it's legit. Do you think she still works after the nerf this patch?</div>
-        <div class="comment-context">Direct question about content — builds loyalty</div>
+        <div class="comment-user">u/paulcatty <span class="pts">Briar Help</span></div>
+        <div class="comment-text">Asking about Briar in current patch</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> Briar's S-tier for a reason — her early dueling is disgusting and she snowballs hard. The trick is not inting with your W. If you can learn when to hold it vs when to send it, she's a free climb to Gold+. I have a full guide on the channel if you want the clear path.</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
 
-    <!-- Comment 7 -->
-    <div class="comment-item" data-status="needs-reply">
+    <div class="comment-item" data-status="draft">
       <div class="comment-left">
-        <div class="comment-user">u/SilverJungler99 <span class="pts">31 pts</span></div>
-        <div class="comment-text">Wait you coach too? What's the best way to book a session? I've been hardstuck Silver 2 for three seasons.</div>
-        <div class="comment-context">Potential coaching lead — link Metafy</div>
+        <div class="comment-user">u/Zardamir <span class="pts">Skarner/Heca</span></div>
+        <div class="comment-text">Debating Skarner and Hecarim placement</div>
+        <div class="comment-draft"><strong>Draft reply:</strong> Skarner and Heca are both in a weird spot in low elo. They're amazing in high elo because teams play around them, but in solo queue below plat your team doesn't follow up on your engages half the time. That's why they drop tiers in the low elo list. In Discord we break down which champs scale with team coordination vs which ones solo carry — discord.gg/fJcHZarpj</div>
       </div>
       <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
-        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
-      </div>
-    </div>
-
-    <!-- Comment 8 -->
-    <div class="comment-item" data-status="replied">
-      <div class="comment-left">
-        <div class="comment-user">u/loloider123 <span class="pts">30 pts</span></div>
-        <div class="comment-text">Based</div>
-        <div class="comment-context">Reply to top comment — already acknowledged</div>
-      </div>
-      <div class="comment-right">
-        <span class="status-tag replied">Replied</span>
-        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn replied">✓ Done</a>
-      </div>
-    </div>
-
-    <!-- Comment 9 -->
-    <div class="comment-item" data-status="needs-reply">
-      <div class="comment-left">
-        <div class="comment-user">u/MetaSlaveAndy <span class="pts">24 pts</span></div>
-        <div class="comment-text">No high elo version? Would love to see how the tier list changes for plat+ where people actually punish bad picks.</div>
-        <div class="comment-context">Content request — aligns with Twitter request too</div>
-      </div>
-      <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
-        <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
-      </div>
-    </div>
-
-    <!-- Comment 10 -->
-    <div class="comment-item" data-status="needs-reply">
-      <div class="comment-left">
-        <div class="comment-user">u/DariusJGDiff <span class="pts">19 pts</span></div>
-        <div class="comment-text">Darius jungle? For real? Gonna try this in my next game lmao. Is there a guide for the clear?</div>
-        <div class="comment-context">Direct funnel to YouTube Darius guide</div>
-      </div>
-      <div class="comment-right">
-        <span class="status-tag needs-reply">Needs Reply</span>
+        <span class="status-tag draft">Draft Ready</span>
         <a href="https://www.reddit.com/r/Jungle_Mains/comments/1r6bxeg/" target="_blank" class="reply-btn">Reply →</a>
       </div>
     </div>
   </div>
 
-  <!-- View Rate Health -->
-  <div class="view-rate-section">
-    <h3>📊 YouTube View Rate Health (Main Channel)</h3>
-    <div class="rate-bar-container">
-      <div class="rate-bar-label">Current (4%)</div>
-      <div class="rate-bar-bg">
-        <div class="rate-bar-fill red" style="width: 13%"></div>
-      </div>
-      <div class="rate-bar-pct" style="color: #e94560;">4%</div>
-    </div>
-    <div class="rate-bar-container">
-      <div class="rate-bar-label">Target (20%)</div>
-      <div class="rate-bar-bg">
-        <div class="rate-bar-fill yellow" style="width: 66%"></div>
-      </div>
-      <div class="rate-bar-pct" style="color: #f0a500;">20%</div>
-    </div>
-    <div class="rate-bar-container">
-      <div class="rate-bar-label">Healthy (30%)</div>
-      <div class="rate-bar-bg">
-        <div class="rate-bar-fill green" style="width: 100%"></div>
-      </div>
-      <div class="rate-bar-pct" style="color: #00d4aa;">30%</div>
-    </div>
-    <div class="rate-target">48,500 subs × 4% = ~1,940 views/video → Goal: 9,700+ views/video (20%)</div>
-  </div>
-
-  <!-- 2-Week Goals -->
+  <!-- 2-Week Goals — Updated Day 2 -->
   <div class="goals-section">
     <div class="section-header">
       <h2>🎯 2-Week Goals (Feb 15 → Mar 1)</h2>
@@ -545,24 +458,17 @@
       </div>
     </div>
     <div class="goal-row">
-      <div class="goal-name">YouTube avg views → 3,000+</div>
+      <div class="goal-name">YouTube subs → 49,000</div>
       <div class="goal-progress">
-        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
-        <div class="goal-numbers">1,900 / 3,000</div>
-      </div>
-    </div>
-    <div class="goal-row">
-      <div class="goal-name">Twitch avg viewers → 60</div>
-      <div class="goal-progress">
-        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
-        <div class="goal-numbers">43 / 60</div>
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 40%"></div></div>
+        <div class="goal-numbers">48,700 / 49,000</div>
       </div>
     </div>
     <div class="goal-row">
       <div class="goal-name">Discord members → 700</div>
       <div class="goal-progress">
-        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
-        <div class="goal-numbers">~622 / 700</div>
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 10%"></div></div>
+        <div class="goal-numbers">628 / 700</div>
       </div>
     </div>
     <div class="goal-row">
@@ -573,28 +479,30 @@
       </div>
     </div>
     <div class="goal-row">
-      <div class="goal-name">Reply to all Reddit comments</div>
+      <div class="goal-name">Reply to Reddit comments (6)</div>
       <div class="goal-progress">
-        <div class="goal-bar"><div class="goal-bar-fill" style="width: 10%"></div></div>
-        <div class="goal-numbers">1 / 10</div>
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 0%"></div></div>
+        <div class="goal-numbers">0 / 6</div>
+      </div>
+    </div>
+    <div class="goal-row">
+      <div class="goal-name">Ultimate Jungle Guide — pick platform</div>
+      <div class="goal-progress">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width: 75%"></div></div>
+        <div class="goal-numbers">Research done</div>
       </div>
     </div>
   </div>
 
-  <!-- YouTube Unified Feed -->
-  <div class="feed-panel" style="margin-bottom: 32px;">
+  <!-- YouTube Feed -->
+  <div class="feed-panel">
     <div class="panel-header">
-      <h3>🔴 YouTube — All Channels</h3>
-      <div class="count" style="display:flex;gap:8px;align-items:center;">
-        <span class="yt-ch-tag main">Main</span>
-        <span class="yt-ch-tag bungle">Bungle</span>
-        <span class="yt-ch-tag pocket">Pocket</span>
-      </div>
+      <h3>🔴 YouTube — Recent Videos</h3>
     </div>
     <div class="yt-row">
       <div class="yt-title">JUNGLE Tier LIST | Season 16 | High & LOW ELO</div>
       <span class="yt-ch-tag main">Main</span>
-      <div class="yt-stats">205 views • 8 likes • 3 comments</div>
+      <div class="yt-stats">205+ views • 8 likes</div>
       <div class="yt-date">Feb 16</div>
       <a href="https://www.youtube.com/watch?v=RNcFjCKxCRw" target="_blank" class="yt-link">Watch →</a>
     </div>
@@ -613,13 +521,6 @@
       <a href="https://www.youtube.com/watch?v=bAn4Qwq7Cp0" target="_blank" class="yt-link">Watch →</a>
     </div>
     <div class="yt-row">
-      <div class="yt-title">JUNGLE ranked CLIMB S16 (stream VOD)</div>
-      <span class="yt-ch-tag bungle">Bungle</span>
-      <div class="yt-stats">4,223 views • 51 likes</div>
-      <div class="yt-date">Feb 10</div>
-      <a href="https://www.youtube.com/watch?v=tGqdl765cds" target="_blank" class="yt-link">Watch →</a>
-    </div>
-    <div class="yt-row">
       <div class="yt-title">HOW to ZYRA jungle in SEASON 16!!!</div>
       <span class="yt-ch-tag main">Main</span>
       <div class="yt-stats">4,767 views • 125 likes</div>
@@ -628,29 +529,24 @@
     </div>
   </div>
 
-  <!-- Twitter -->
-  <div class="feed-panel" style="margin-bottom: 32px;">
+  <!-- Twitter Feed -->
+  <div class="feed-panel">
     <div class="panel-header">
-      <h3>🔵 Twitter/X Mentions</h3>
-      <div class="count">2 items</div>
+      <h3>🔵 Twitter/X Highlights</h3>
     </div>
     <div class="feed-comment">
       <div class="meta">
-        <span class="author">@SawyerJunglelol</span>
+        <span class="author">@SawyerJunglelol — Tier List Tweet</span>
         <span class="status-tag" style="background:#1a1a2e;color:#1da1f2;">🔥 41.7K views</span>
       </div>
-      <div class="source">Tier List Tweet</div>
-      <div class="text">409 likes • 16 RT • 183 bookmarks</div>
-      <a href="https://x.com/SawyerJunglelol/status/2022613246898016686" target="_blank">→ View on X</a>
+      <div class="text">409 likes • 16 RT • 183 bookmarks — PINNED</div>
     </div>
     <div class="feed-comment">
       <div class="meta">
         <span class="author">@xdxdxd556</span>
-        <span class="status-tag needs-reply">Content Idea</span>
+        <span class="status-tag" style="background:#f0a50033;color:#f0a500;">Content Request</span>
       </div>
-      <div class="source">Reply to Tier List</div>
       <div class="text">"Can u make a high elo jungle tier list next?"</div>
-      <a href="https://x.com/xdxdxd556/status/2022825358588821765" target="_blank">→ View on X</a>
     </div>
   </div>
 
@@ -666,7 +562,7 @@
         <div class="save-indicator" id="sawyer-notes-status"></div>
       </div>
       <div class="note-box">
-        <h4 class="greg">🔴 Greg's Notes</h4>
+        <h4 class="greg">🔴 Demic Notes</h4>
         <textarea id="greg-notes" placeholder="Strategy notes, scheduling, things to discuss..."></textarea>
         <div class="save-indicator" id="greg-notes-status"></div>
       </div>
@@ -684,11 +580,10 @@
 </div>
 
 <div class="footer">
-  Sawyer Jungle SM Dashboard v2 • Built by Greg & The Crow 🪶 • <a href="#">Powered by The Crow's Nest</a>
+  Sawyer Jungle SM Dashboard v3 • <strong>Demic Media</strong> 🪶 • <a href="https://necairus.github.io/Sawyer-Dashboard/">necairus.github.io/Sawyer-Dashboard</a>
 </div>
 
 <script>
-// === Filter comments ===
 function filterComments(status) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
@@ -697,18 +592,14 @@ function filterComments(status) {
     item.style.display = item.dataset.status === status ? '' : 'none';
   });
 }
-
-// === localStorage persistence ===
 const STORAGE_KEY = 'sawyer-dashboard';
 function loadData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
 function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-
 function initNotes() {
   const data = loadData();
   document.getElementById('sawyer-notes').value = data.sawyerNotes || '';
   document.getElementById('greg-notes').value = data.gregNotes || '';
 }
-
 function setupNoteAutoSave(id, key) {
   const textarea = document.getElementById(id);
   const status = document.getElementById(id + '-status');
@@ -726,10 +617,8 @@ function setupNoteAutoSave(id, key) {
     }, 800);
   });
 }
-
 function loadIdeas() { return (loadData().ideas || []); }
 function saveIdeas(ideas) { const d = loadData(); d.ideas = ideas; saveData(d); }
-
 function renderIdeas() {
   const ideas = loadIdeas();
   const list = document.getElementById('idea-list');
@@ -740,7 +629,6 @@ function renderIdeas() {
     list.appendChild(li);
   });
 }
-
 function addIdea() {
   const input = document.getElementById('idea-input');
   const text = input.value.trim();
@@ -749,13 +637,9 @@ function addIdea() {
   ideas.unshift({ text, author: 'Added', date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) });
   saveIdeas(ideas); renderIdeas(); input.value = '';
 }
-
 function deleteIdea(i) { const ideas = loadIdeas(); ideas.splice(i, 1); saveIdeas(ideas); renderIdeas(); }
-
 function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
-
 document.getElementById('idea-input').addEventListener('keydown', e => { if (e.key === 'Enter') addIdea(); });
-
 initNotes();
 setupNoteAutoSave('sawyer-notes', 'sawyerNotes');
 setupNoteAutoSave('greg-notes', 'gregNotes');
